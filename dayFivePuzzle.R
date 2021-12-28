@@ -1,6 +1,8 @@
 library(tidyverse)
 rm(list = ls())
 
+#part one
+
 submarineValues =  read_tsv("dayFiveInput.txt", col_names = FALSE) %>%
 separate(col = X1, into = c("StartX", "StartY", "EndX", "EndY")) %>%
   mutate(across(.fns = as.integer))
@@ -37,30 +39,15 @@ for(i in 1:nrow(submarineValuesY)){
   
 }
 
-length(which(matrixSubmarine > 1))
+answer = length(which(matrixSubmarine > 1))
 
 
-# submarineValuesFinal <- tibble(X = numeric(), Y = )
-# for(i in 1:nrow(submarineValuesX)){
-#   
-# }
-
-
-# for(i in 1:nrow(submarineValuesX)){
-#   for(j in 1:nrow(submarineValuesY)){
-#     if(submarineValuesY$X[j] %in% range(submarineValuesX$StartX[i]:submarineValuesX$EndX[i])){
-#       submarineX = append(submarineX, submarineValuesY$X[j])   
-#     }
-#   }
-# }
-
+#Part two
+ 
 submarineValues_B = submarineValues %>%
   filter(StartX != EndX & StartY != EndY) %>%
   mutate(MovementX = StartX - EndX, MovementY = StartY - EndY) %>%
   mutate(Sign = if_else(MovementX == MovementY, "Positive", "Negative"))
-
-# submarineValues_DP = filter(submarineValues_B, Sign == "Positive")
-
 
 
 
@@ -74,4 +61,4 @@ for(i in 1:nrow(submarineValues_B)){
   }
 }
 
-length(which(matrixSubmarine > 1))
+ answer = length(which(matrixSubmarine > 1))
