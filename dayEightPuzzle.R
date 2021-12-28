@@ -1,6 +1,10 @@
 library(tidyverse)
 library(data.table)
 
+`%ni%` <- Negate(`%in%`)
+
+
+
 #Part 1
 
 signals = fread("dayEightInput.txt", header = FALSE) %>%
@@ -38,10 +42,6 @@ unique = signals %>%
 uniqueRaw <- strsplit(pull(unique), split = " ")
 
 
-# 
-# order(uniqueRaw[[k]][nchar(uniqueRaw[[k]]) == 3])
-# 
-# str_remove(, uniqueRaw[[k]][nchar(uniqueRaw[[k]]) == 2])
 
 
 
@@ -56,7 +56,7 @@ rawCut <- function(i, n){
   unlist(strsplit(uniqueRaw[[i]][nchar(uniqueRaw[[i]]) == n], split = ""))
 }
 
-
+letterSort = tibble()
 
 for(k in 1:200){
   
@@ -122,13 +122,40 @@ for(k in 1:200){
 }
 
 unFix <- function(index, lettersCount){
-sort(unname(unlist(letterSort[index,lettersCount])))
+paste(sort(unname(unlist(letterSort[index,lettersCount]))), collapse = "")
 }
 
-zeroValue = unFix(1, c(1:3, 4:7))
-oneValue = unFix(1, c(3, 6))
-twoValue = unFix(1, c(1, 3, 4, 5, 7))
-threeValue = unFix(1, c(1, 3, 4, 6, 7))
+outputVector <- c()
 
+for(i in 1:200){
 
   
+    
+zeroValue = unFix(i, c(1:3, 5:7))
+oneValue = unFix(i, c(3, 6))
+twoValue = unFix(i, c(1, 3, 4, 5, 7))
+threeValue = unFix(i, c(1, 3, 4, 6, 7))
+fourValue = unFix(i, c(2, 3, 4, 6))
+fiveValue = unFix(i, c(1, 2, 4, 6, 7))
+sixValue = unFix(i, c(1, 2, 4, 5, 6, 7))
+sevenValue = unFix(i, c(1, 3, 6))
+eightValue = unFix(i, c(1:7))
+nineValue = unFix(i, c(1, 2, 3, 4, 6, 7))
+
+valueList = c(zeroValue, oneValue, twoValue, threeValue, fourValue, fiveValue,
+              sixValue, sevenValue, eightValue, nineValue)
+
+stringNumber <- c()
+
+for(j in 1:4){
+valueNumber = which(valueList == sortString(outputRaw[((i*4)- 4 + j)])) - 1
+stringNumber = append(stringNumber, valueNumber)
+}
+
+outputVector = append(outputVector, paste(stringNumber, collapse = ""))
+}
+
+answer = sum(as.integer(outputVector))
+
+#I think there's probably a more elegant way to do this one - coding the segment values individually
+#is a bit clunky - but nothing really suggests itself.
