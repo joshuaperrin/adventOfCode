@@ -58,3 +58,20 @@ submarineValues_B = submarineValues %>%
   filter(StartX != EndX & StartY != EndY) %>%
   mutate(MovementX = StartX - EndX, MovementY = StartY - EndY) %>%
   mutate(Sign = if_else(MovementX == MovementY, "Positive", "Negative"))
+
+# submarineValues_DP = filter(submarineValues_B, Sign == "Positive")
+
+
+
+
+for(i in 1:nrow(submarineValues_B)){
+  
+  xVector = pull(submarineValues_B, StartX)[i]:pull(submarineValues_B, EndX)[i]
+  yVector = pull(submarineValues_B, StartY)[i]:pull(submarineValues_B, EndY)[i]
+  
+  for(j in 1:length(xVector)){
+    matrixSubmarine[xVector[j], yVector[j]] <- matrixSubmarine[xVector[j], yVector[j]] + 1
+  }
+}
+
+length(which(matrixSubmarine > 1))
