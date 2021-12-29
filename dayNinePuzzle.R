@@ -41,4 +41,16 @@ answer = totalRisk        #This answer seems very low for a 100*100 matrix but i
 
 #Needs a search algorithm. I have never done this before apparently.
 
+searchMatrix = matrix(FALSE, nrow = 100, ncol = 100)
+
+nineMatrix <- addMatrix == 9
+
+
+
+for(i in 1:100){
+  for(j in 1:100){
+    if(nineMatrix[i, j] == FALSE){
+      
+    
+
 
